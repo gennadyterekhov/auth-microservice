@@ -25,10 +25,10 @@ after that, use this to connect to db in cli
 
 create new migration
 
-      GOOSE_MIGRATION_DIR="internal/storage/migrations" goose create new_table_orders sql
+      GOOSE_MIGRATION_DIR="migrations" goose create new_table_orders sql
 
 run all migrations
 
-      GOOSE_MIGRATION_DIR="internal/storage/migrations" GOOSE_DRIVER=postgres GOOSE_DBSTRING="postgresql://authmcrsrv_user:authmcrsrv_pass@127.0.0.1:5432/authmcrsrv_db?sslmode=disable" goose up
-      GOOSE_MIGRATION_DIR="internal/storage/migrations" GOOSE_DRIVER=postgres GOOSE_DBSTRING="postgresql://authmcrsrv_user:authmcrsrv_pass@127.0.0.1:5432/authmcrsrv_db_test?sslmode=disable" goose up
+      GOOSE_MIGRATION_DIR="migrations" GOOSE_DRIVER=postgres GOOSE_DBSTRING="postgresql://authmcrsrv_user:authmcrsrv_pass@127.0.0.1:5432/authmcrsrv_db?sslmode=disable" goose up
+      GOOSE_MIGRATION_DIR="migrations" GOOSE_DRIVER=postgres GOOSE_DBSTRING="postgresql://authmcrsrv_user:authmcrsrv_pass@127.0.0.1:5432/authmcrsrv_db_test?sslmode=disable" goose up
 
