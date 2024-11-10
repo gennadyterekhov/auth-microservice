@@ -8,7 +8,7 @@ services:
     depends_on:
       - psql
     volumes:
-      - app_data:/var/www
+      - ./:/var/www
 
   psql:
     image: postgres:17-alpine
@@ -22,7 +22,5 @@ services:
       - psql_data:/var/lib/postgresql/data
 
 volumes:
-  app_data:
-    name: authmcrsrv_app_data
   psql_data:
     name: authmcrsrv_psql_data
