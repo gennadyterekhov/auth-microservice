@@ -14,6 +14,8 @@ services:
       - ./cmd/server/server_linux_amd64:/var/www/server_linux_amd64
     ports:
       - "8080:8080"
+    networks:
+      - authmcrsrv_network
 
   psql:
     image: postgres:17-alpine
@@ -25,7 +27,12 @@ services:
       - "54320:5432"
     volumes:
       - psql_data:/var/lib/postgresql/data
+    networks:
+      - authmcrsrv_network
 
 volumes:
   psql_data:
     name: authmcrsrv_psql_data
+
+networks:
+  authmcrsrv_network:
