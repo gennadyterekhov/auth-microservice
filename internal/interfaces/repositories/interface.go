@@ -10,7 +10,7 @@ import (
 type RepositoryInterface interface {
 	Clear()
 
-	InsertUser(ctx context.Context, login string, password string, bio string) (*models2.User, error)
+	InsertUser(ctx context.Context, login string, password string) (*models2.User, error)
 	SelectUserByID(ctx context.Context, id int64) (*models2.User, error)
 	SelectUserByLogin(ctx context.Context, login string) (*models2.User, error)
 }

@@ -34,7 +34,7 @@ func (repo *RepositoryMock) Clear() {
 
 // users
 
-func (repo *RepositoryMock) InsertUser(ctx context.Context, login string, password string, bio string) (*models2.User, error) {
+func (repo *RepositoryMock) InsertUser(ctx context.Context, login string, password string) (*models2.User, error) {
 	alreadyExisting, err := repo.SelectUserByLogin(ctx, login)
 	if err != nil {
 		return nil, err

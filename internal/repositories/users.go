@@ -30,7 +30,7 @@ func (repo *Repository) InsertUser(ctx context.Context, login, password string) 
 }
 
 func (repo *Repository) SelectUserByID(ctx context.Context, id int64) (*models.User, error) {
-	const query = `SELECT id, login, password, bio from users WHERE  id = $1`
+	const query = `SELECT id, login, password from users WHERE  id = $1`
 	row := repo.DB.QueryRowContext(ctx, query, id)
 	if row.Err() != nil {
 		return nil, row.Err()
@@ -46,7 +46,7 @@ func (repo *Repository) SelectUserByID(ctx context.Context, id int64) (*models.U
 }
 
 func (repo *Repository) SelectUserByLogin(ctx context.Context, login string) (*models.User, error) {
-	const query = `SELECT id, login, password, bio from users WHERE  login = $1`
+	const query = `SELECT id, login, password from users WHERE  login = $1`
 	row := repo.DB.QueryRowContext(ctx, query, login)
 	if row.Err() != nil {
 		return nil, row.Err()
