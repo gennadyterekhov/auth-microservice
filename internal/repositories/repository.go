@@ -8,14 +8,12 @@ import (
 
 // Repository is a single point of access to the database. it's not divided between entities - one repo for all
 type Repository struct {
-	DB                 abstract.QueryMaker
-	abstractRepository *abstract.Repository
+	DB abstract.QueryMaker
 }
 
 func New(db abstract.QueryMaker) *Repository {
 	return &Repository{
-		DB:                 db,
-		abstractRepository: abstract.New(db),
+		DB: db,
 	}
 }
 

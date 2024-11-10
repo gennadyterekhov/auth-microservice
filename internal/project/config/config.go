@@ -9,6 +9,11 @@ import (
 	"github.com/joho/godotenv"
 )
 
+const (
+	defaultAddr  = "localhost:8080"
+	defaultDbUrl = "host=psql port=5432 user=authmcrsrv_user password=authmcrsrv_pass dbname=authmcrsrv_db sslmode=disable"
+)
+
 type Config struct {
 	Addr  string
 	DBDsn string
@@ -30,8 +35,8 @@ func getConfig() *Config {
 	}
 
 	return &Config{
-		Addr:  getStringFromEnvOrFallback("RUN_ADDRESS", "localhost:8080"),
-		DBDsn: getStringFromEnvOrFallback("DATABASE_URI", "host=psql port=5432 user=authmcrsrv_user password=authmcrsrv_pass dbname=authmcrsrv_db sslmode=disable"),
+		Addr:  getStringFromEnvOrFallback("RUN_ADDRESS", defaultAddr),
+		DBDsn: getStringFromEnvOrFallback("DATABASE_URI", defaultDbUrl),
 	}
 }
 

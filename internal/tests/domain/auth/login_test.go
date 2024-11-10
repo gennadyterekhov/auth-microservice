@@ -17,12 +17,12 @@ import (
 
 type loginTest struct {
 	suites.WithService
-	Service auth.Service
+	Service *auth.Service
 }
 
 type loginErrorsTest struct {
 	suites.WithService
-	Service auth.Service
+	Service *auth.Service
 }
 
 func TestLogin(t *testing.T) {

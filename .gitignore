@@ -3,3 +3,4 @@
 .temp
 .env
 /artefacts/token
+.DS_Store

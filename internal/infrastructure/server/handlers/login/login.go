@@ -13,12 +13,12 @@ import (
 )
 
 type Controller struct {
-	Service    auth.Service
-	Serializer serializer.Serializer
+	Service    *auth.Service
+	Serializer serializer.Interface
 }
 
-func NewController(service auth.Service, serializer serializer.Serializer) Controller {
-	return Controller{
+func NewController(service *auth.Service, serializer serializer.Interface) *Controller {
+	return &Controller{
 		Service:    service,
 		Serializer: serializer,
 	}

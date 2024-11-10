@@ -1,5 +1,5 @@
 package serializer
 
-type Serializer interface {
+type Interface interface {
 	Serialize(data interface{}) ([]byte, error)
 }

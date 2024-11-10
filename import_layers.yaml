@@ -8,13 +8,10 @@
 
     "internal/interfaces", # must be at least accessible from tests and domain, so need a separate layer
 
-    #"internal/tests/inits", # тут логическая беда тк я хочу по простому инитить и завишу от бд а она ниже
-
     "internal/logger",
 
     "internal/project",
 
-    # тут у нас тесты зависят от сюит, поэтому они перенесены вниз в internal/tests/domain
     "internal/domain", # structs with dependencies and business logic
 
     "internal/repositories", # convenient data access, does not directly depend on db

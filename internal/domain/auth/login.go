@@ -18,8 +18,8 @@ type Service struct {
 	Repository repositories.RepositoryInterface
 }
 
-func NewService(repo repositories.RepositoryInterface) Service {
-	return Service{
+func NewService(repo repositories.RepositoryInterface) *Service {
+	return &Service{
 		Repository: repo,
 	}
 }

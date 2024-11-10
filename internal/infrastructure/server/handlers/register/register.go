@@ -12,12 +12,12 @@ import (
 )
 
 type Controller struct {
-	Service    domain.Service
-	Serializer serializer.Serializer
+	Service    *domain.Service
+	Serializer serializer.Interface
 }
 
-func NewController(service domain.Service, serializer serializer.Serializer) Controller {
-	return Controller{
+func NewController(service *domain.Service, serializer serializer.Interface) *Controller {
+	return &Controller{
 		Service:    service,
 		Serializer: serializer,
 	}
@@ -41,6 +41,10 @@ func (controller *Controller) register(res http.ResponseWriter, req *http.Reques
 
 		http.Error(res, err.Error(), http.StatusBadRequest)
 		return
+	}
+
+	if reqDto.Login == "" || reqDto.Password == "" {
+		http.Error(res, "login or password is empty", http.StatusBadRequest)
 	}
 
 	resDto, err := controller.Service.Register(req.Context(), reqDto)

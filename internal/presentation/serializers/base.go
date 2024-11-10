@@ -8,7 +8,7 @@ import (
 
 type Base struct{}
 
-var _ serializer.Serializer = New()
+var _ serializer.Interface = New()
 
 func New() *Base {
 	return &Base{}

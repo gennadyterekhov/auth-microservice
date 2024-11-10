@@ -8,8 +8,8 @@ import (
 )
 
 type Controllers struct {
-	Register register.Controller
-	Login    login.Controller
+	Register *register.Controller
+	Login    *login.Controller
 }
 
 func NewControllers(servs *services.Services, pack *serializers.Base) *Controllers {
