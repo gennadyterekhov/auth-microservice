@@ -6,8 +6,8 @@ import (
 
 func New() *serializer.Pack {
 	return &serializer.Pack{
-		Users:      NewBase(),
-		Register:   NewBase(),
-		Login:      NewBase(),
+		Users:    NewBase(),
+		Register: NewBase(),
+		Login:    NewBase(),
 	}
 }

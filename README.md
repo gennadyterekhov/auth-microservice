@@ -2,18 +2,12 @@
 
 
 # db
-## db installation (one-time use)
+## 
+must have these env vars
 
-      sudo -i -u postgres
-      psql -U postgres
-      postgres=# create database authmcrsrv_db;
-      postgres=# create database authmcrsrv_db_test;
-      postgres=# create user authmcrsrv_user with encrypted password 'authmcrsrv_pass';
-      postgres=# grant all privileges on database authmcrsrv_db_test to authmcrsrv_user;
-      postgres=# grant all privileges on database authmcrsrv_db to authmcrsrv_user;
-      alter database authmcrsrv_db owner to authmcrsrv_user;
-      alter database authmcrsrv_db_test owner to authmcrsrv_user;
-      alter schema public owner to authmcrsrv_user;
+    POSTGRES_DB 
+    POSTGRES_USER
+    POSTGRES_PASSWORD
 
 after that, use this to connect to db in cli
 
