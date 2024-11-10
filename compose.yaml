@@ -7,8 +7,6 @@ services:
       dockerfile: devops/app.dockerfile
     depends_on:
       - psql
-    volumes:
-      - ./:/var/www
 
   psql:
     image: postgres:17-alpine
