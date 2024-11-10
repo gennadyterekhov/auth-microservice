@@ -12,7 +12,7 @@ import (
 func RunMigrationsOnConnection(db *sql.DB) error {
 	dir, err := getMigrationsDir()
 	if err != nil {
-		return err
+		return errors.Wrap(err, "error getting migrations directory")
 	}
 	return goose.Up(db, dir)
 }
