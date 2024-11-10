@@ -33,7 +33,7 @@ func (repo *RepositoryErrorMock) SetError(err error) {
 
 // users
 
-func (repo *RepositoryErrorMock) InsertUser(context.Context, string, string, string) (*models2.User, error) {
+func (repo *RepositoryErrorMock) InsertUser(context.Context, string, string) (*models2.User, error) {
 	return nil, repo.err
 }
 

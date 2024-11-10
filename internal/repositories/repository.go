@@ -27,10 +27,6 @@ var (
 // Clear is used only in tests
 func (repo *Repository) Clear() {
 	queries := []string{
-		"delete from categories_followed_by_user;",
-		"delete from orders_categories;",
-		"delete from categories;",
-		"delete from orders;",
 		"delete from users;",
 	}
 

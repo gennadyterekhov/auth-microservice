@@ -28,7 +28,7 @@ func (service *Service) Register(ctx context.Context, reqDto *requests.Register)
 		return nil, err
 	}
 
-	user, err := service.Repository.InsertUser(ctx, reqDto.Login, encryptedPassword, "")
+	user, err := service.Repository.InsertUser(ctx, reqDto.Login, encryptedPassword)
 	if err != nil {
 		return nil, err
 	}

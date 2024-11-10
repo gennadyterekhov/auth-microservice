@@ -7,7 +7,7 @@ import (
 )
 
 func (repo *Repository) InsertUser(ctx context.Context, login, password string) (*models.User, error) {
-	const query = `INSERT INTO users ( login, password) VALUES ( $1, $2, ) RETURNING id;`
+	const query = `INSERT INTO users ( login, password) VALUES ( $1, $2 ) RETURNING id;`
 
 	row := repo.DB.QueryRowContext(ctx, query, login, password)
 	if row.Err() != nil {

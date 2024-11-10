@@ -24,7 +24,7 @@ func NewFactory(repo repositories.RepositoryInterface) *Factory {
 }
 
 func (f *Factory) NewUser(name string) *models2.User {
-	category, err := f.repo.InsertUser(context.Background(), name, "password", "")
+	category, err := f.repo.InsertUser(context.Background(), name, "password")
 	if err != nil {
 		panic(err)
 	}
