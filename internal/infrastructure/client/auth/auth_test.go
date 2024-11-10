@@ -23,3 +23,9 @@ func TestCanGetToken(t *testing.T) {
 	err = SetToken(realToken)
 	require.NoError(t, err)
 }
+
+func TestCanGetContext(t *testing.T) {
+	ctx, err := GetContext()
+	require.NoError(t, err)
+	require.NotNil(t, ctx)
+}
