@@ -1,0 +1,49 @@
+name: Test
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: golang:1.23
+    steps:
+      # Your original steps
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.23.0
+
+
+      # Add this
+#      - name: Update Coverage Badge
+#        # GitHub actions: default branch variable
+#        # https://stackoverflow.com/questions/64781462/github-actions-default-branch-variable
+#        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+#        uses: we-cli/coverage-badge-action@main
+
+      - name: Calculate coverage
+        run: ./scripts/get_test_coverage_percentages.sh > artefacts/coverage.txt
+
+      - name: Extract coverage percentage
+        id: extract_coverage
+        run: |
+          COVERAGE=$(cat artefacts/coverage.txt)
+          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+
+      - name: Generate Coverage Badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 978ef5ee70cf8245eff5c7957ef6e9ee
+          filename: test.json
+          label: Hello
+          message: World
+          color: orange
+
+
+#      - name: Commit changes
+#        uses: EndBug/add-and-commit@v9
+#        with:
+#          add: "badges/coverage.json" # Adjust path if you didn't use badgeFolder
+#          message: "Update coverage badge"
+#          push: true
