@@ -30,7 +30,7 @@ func createPostgresContainer(ctx context.Context) (testcontainers.Container, str
 	randint := rand.Intn(100)
 	dbName := fmt.Sprintf("authmcrsrv_db_test_%d", randint)
 	req := testcontainers.ContainerRequest{
-		Image:        "postgres:16-alpine",
+		Image:        "postgres:17-alpine",
 		ExposedPorts: []string{"5432/tcp"},
 		Env: map[string]string{
 			"POSTGRES_PASSWORD": "password",
