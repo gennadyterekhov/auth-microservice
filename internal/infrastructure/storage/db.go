@@ -2,6 +2,7 @@ package storage
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage/migrations"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
@@ -11,13 +12,18 @@ import (
 )
 
 func NewDB(dsn string) abstract.QueryMaker {
+	fmt.Println("opening database connection")
+
 	conn, err := sql.Open("pgx", dsn)
 	if err != nil {
 		logger.Debugln("could not connect to db ", err.Error())
 		panic(err)
 	}
+
+	fmt.Println("running migrations")
 	err = migrations.RunMigrationsOnConnection(conn)
 	if err != nil {
+		logger.Debugln("could not run migrations ", err.Error())
 		panic(err)
 	}
 
