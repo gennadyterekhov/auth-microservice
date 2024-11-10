@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/pkg/errors"
 )
 
 func GetProjectRoot() (string, error) {
 	// Start from the current working directory.
 	currentDir, err := os.Getwd()
 	if err != nil {
-		return "", fmt.Errorf("unable to get current working directory: %w", err)
+		return "", errors.Wrap(err, "unable to get current working directory")
 	}
 
 	// Iterate up the directory tree until we find go.mod
