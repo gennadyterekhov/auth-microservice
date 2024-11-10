@@ -11,12 +11,11 @@ import (
 	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/project/config"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories"
-	"github.com/gennadyterekhov/auth-microservice/internal/repositories/abstract"
 )
 
 type App struct {
 	ServerConfig *config.Config
-	DB           abstract.QueryMaker
+	Repo         *repositories.Repository
 	Router       *swagrouter.Router
 }
 
@@ -25,8 +24,7 @@ func New() *App {
 
 	serverConfig := config.New()
 
-	db := storage.NewDB(serverConfig.DBDsn)
-	repo := repositories.New(db)
+	repo := storage.NewRepo(serverConfig.DBDsn)
 
 	servs := services.New(repo)
 	serPack := serializers.New()
@@ -35,7 +33,7 @@ func New() *App {
 	routerInstance := swagrouter.NewRouter(controllersStruct)
 
 	app.ServerConfig = serverConfig
-	app.DB = db
+	app.Repo = repo
 	app.Router = routerInstance
 
 	return app
