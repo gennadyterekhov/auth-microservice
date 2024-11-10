@@ -1,12 +1,14 @@
 version: '3.7'
 
 services:
-  authmcrsrv:
+  app:
     build:
       context: .
-      dockerfile: devops/authmcrsrv.dockerfile
+      dockerfile: devops/app.dockerfile
     depends_on:
       - psql
+    volumes:
+      - app_data:/var/www
 
   psql:
     image: postgres:17-alpine
@@ -16,3 +18,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "54320:5432"
+    volumes:
+      - psql_data:/var/lib/postgresql/data
+
+volumes:
+  app_data:
+    name: authmcrsrv_app_data
+  psql_data:
+    name: authmcrsrv_psql_data
