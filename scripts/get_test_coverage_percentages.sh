@@ -1,5 +1,8 @@
 go test -v -coverpkg=./... -coverprofile=artefacts/coverage/coverage.out -covermode=count ./... > /dev/null
 
+pwd
+ls
+
 cat artefacts/coverage/coverage.out | grep -v ".pb." > artefacts/coverage/coverage.temp.out
 cat artefacts/coverage/coverage.temp.out | grep -v "/swagger/" > artefacts/coverage/coverage.out
 cat artefacts/coverage/coverage.out | grep -v "/repository_error_mock" > artefacts/coverage/coverage.temp.out
