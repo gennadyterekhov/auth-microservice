@@ -104,5 +104,5 @@ func getMigrationsDir() (string, error) {
 		return "", errors.Wrap(err, "error getting project root")
 	}
 
-	return path.Join(pr, "internal/infrastructure/storage/migrations"), nil
+	return path.Join(pr, "migrations"), nil
 }
