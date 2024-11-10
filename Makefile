@@ -27,6 +27,6 @@ coverage_html_ui:
 	./scripts/html_with_better_ui.sh
 
 build:
-	env GOOS=linux GOARCH=amd64 go build ./cmd/server
-	env GOOS=darwin GOARCH=amd64 go build ./cmd/server
-	env GOOS=darwin GOARCH=arm64 go build ./cmd/server
+	env GOOS=linux GOARCH=amd64 go build  -o ./cmd/server/server_linux_amd64  ./cmd/server
+	env GOOS=darwin GOARCH=amd64 go build -o ./cmd/server/server_darwin_amd64 ./cmd/server
+	env GOOS=darwin GOARCH=arm64 go build -o ./cmd/server/server_darwin_arm64 ./cmd/server
