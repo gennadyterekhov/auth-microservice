@@ -10,11 +10,9 @@ import (
 )
 
 func NewDB(dsn string) abstract.QueryMaker {
-	logger.Debugln("opening database connection with dsn ", dsn)
-
 	conn, err := sql.Open("pgx", dsn)
 	if err != nil {
-		logger.Debugln("could not connect to db using dsn: " + dsn + " " + err.Error())
+		logger.Debugln("could not connect to db ", err.Error())
 		panic(err)
 	}
 
@@ -23,12 +21,5 @@ func NewDB(dsn string) abstract.QueryMaker {
 
 // NewRepo exists because this pkg can depend on repo, but repo cannot depend on this pkg
 func NewRepo(dsn string) *repositories.Repository {
-	logger.Debugln("opening database connection with dsn ", dsn)
-	conn, err := sql.Open("pgx", dsn)
-	if err != nil {
-		logger.Debugln("could not connect to db using dsn: " + dsn + " " + err.Error())
-		panic(err)
-	}
-
-	return repositories.New(conn)
+	return repositories.New(NewDB(dsn))
 }
