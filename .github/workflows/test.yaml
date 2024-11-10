@@ -22,13 +22,14 @@ jobs:
 #        uses: we-cli/coverage-badge-action@main
 
       - name: Calculate coverage
-        run: ./scripts/get_test_coverage_percentages.sh > artefacts/coverage.txt
+        run: |
+          ./scripts/get_test_coverage_percentages.sh > artefacts/coverage.txt
 
       - name: Extract coverage percentage
         id: extract_coverage
         run: |
           COVERAGE=$(cat artefacts/coverage.txt)
-          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
       - name: Generate Coverage Badge
         uses: schneegans/dynamic-badges-action@v1.7.0
@@ -36,9 +37,11 @@ jobs:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 978ef5ee70cf8245eff5c7957ef6e9ee
           filename: test.json
-          label: Hello
-          message: World
-          color: orange
+          label: coverage
+          message: ${{ env.COVERAGE }}
+          valColorRange: ${{ env.COVERAGE }}
+          minColorRange: 40
+          maxColorRange: 90
 
 
 #      - name: Commit changes
