@@ -21,7 +21,6 @@ func TestJSON(t *testing.T) {
 }
 
 func (suite *jsonTestSuite) SetupSuite() {
-	inits.InitDbSuite(suite)
 	inits.InitFactorySuite(suite)
 
 	suite.SetServer(httptest.NewServer(getTestRouter()))

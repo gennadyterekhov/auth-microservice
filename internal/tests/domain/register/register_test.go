@@ -15,7 +15,7 @@ import (
 
 type testSuite struct {
 	suites.WithService
-	Service register.Service
+	Service *register.Service
 }
 
 func (suite *testSuite) SetupSuite() {

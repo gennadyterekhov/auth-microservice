@@ -7,8 +7,8 @@ import (
 )
 
 type Services struct {
-	Register register.Service
-	Login    auth.Service
+	Register *register.Service
+	Login    *auth.Service
 }
 
 func New(repo repositories.RepositoryInterface) *Services {

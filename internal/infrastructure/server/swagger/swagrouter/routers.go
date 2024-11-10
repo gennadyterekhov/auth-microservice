@@ -51,14 +51,14 @@ func (r *Router) initializeRoutes() {
 			"AuthMicroserviceLogin",
 			strings.ToUpper("Post"),
 			"/api/login",
-			login.Handler(&r.Controllers.Login).ServeHTTP,
+			login.Handler(r.Controllers.Login).ServeHTTP,
 		},
 
 		Route{
 			"AuthMicroserviceRegister",
 			strings.ToUpper("Post"),
 			"/api/register",
-			register.Handler(&r.Controllers.Register).ServeHTTP,
+			register.Handler(r.Controllers.Register).ServeHTTP,
 		},
 		// TODO add check, forget endpoints
 	}
