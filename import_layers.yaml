@@ -1,0 +1,34 @@
+{
+  "Layers": [
+    "internal/consts",
+
+    "internal/dtos", # plain structs without methods and dependencies
+
+    "internal/models", # structs with methods
+
+    "internal/interfaces", # must be at least accessible from tests and domain, so need a separate layer
+
+    #"internal/tests/inits", # тут логическая беда тк я хочу по простому инитить и завишу от бд а она ниже
+
+    "internal/logger",
+
+    "internal/project",
+
+    # тут у нас тесты зависят от сюит, поэтому они перенесены вниз в internal/tests/domain
+    "internal/domain", # structs with dependencies and business logic
+
+    "internal/repositories", # convenient data access, does not directly depend on db
+
+    "internal/tests/suites",
+
+    "internal/infrastructure/protobuf",
+    "internal/infrastructure/client", # generated grpc client
+    "internal/factories",
+    "internal/infrastructure/storage", # real db conn, depends on pgx
+    "internal/infrastructure/server", # generated grpc server + custom handlers
+
+    "internal/presentation",
+
+    "internal/app", # actual instance of an application must be lowest because it creates structs from other layers
+  ]
+}

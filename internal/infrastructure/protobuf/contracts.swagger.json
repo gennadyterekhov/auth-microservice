@@ -1,0 +1,748 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "internal/infrastructure/protobuf/contracts.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/categories": {
+      "get": {
+        "operationId": "ArtDealers_GetCategories",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufGetCategoriesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "category"
+        ]
+      },
+      "post": {
+        "operationId": "ArtDealers_CreateCategory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufCreateCategoryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "category"
+        ]
+      }
+    },
+    "/api/login": {
+      "post": {
+        "operationId": "ArtDealers_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protobufLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/order": {
+      "get": {
+        "operationId": "ArtDealers_SearchOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufSearchOrdersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "authorID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "buyerID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "priceMin",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "priceMax",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "CreatedAtFrom",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "CreatedAtTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UpdatedAtFrom",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UpdatedAtTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ClosedAtFrom",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ClosedAtTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "DeletedAtFrom",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "DeletedAtTo",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "search"
+        ]
+      },
+      "post": {
+        "operationId": "ArtDealers_CreateOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufCreateOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protobufOrderEntityNoID"
+            }
+          }
+        ],
+        "tags": [
+          "order"
+        ]
+      }
+    },
+    "/api/relevant": {
+      "get": {
+        "operationId": "ArtDealers_GetRelevantOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufGetRelevantOrdersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "search"
+        ]
+      }
+    },
+    "/api/order/{orderID}": {
+      "get": {
+        "operationId": "ArtDealers_GetOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufGetOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "order"
+        ]
+      },
+      "delete": {
+        "operationId": "ArtDealers_DeleteOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufDeleteOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "order"
+        ]
+      },
+      "put": {
+        "operationId": "ArtDealers_UpdateOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufUpdateOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protobufOrderEntityNoID"
+            }
+          }
+        ],
+        "tags": [
+          "order"
+        ]
+      }
+    },
+    "/api/order/{orderID}/done-by/{buyerID}": {
+      "patch": {
+        "operationId": "ArtDealers_MarkOrderAsDone",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufMarkOrderAsDoneResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "buyerID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "order"
+        ]
+      }
+    },
+    "/api/register": {
+      "post": {
+        "operationId": "ArtDealers_Register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufRegisterResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protobufRegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/user": {
+      "put": {
+        "operationId": "ArtDealers_UpdateUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protobufUpdateUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protobufUpdateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "protobufCategoryEntity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufCreateCategoryResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufCreateOrderResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufDeleteOrderResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufGetCategoriesResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufCategoryEntity"
+          }
+        }
+      }
+    },
+    "protobufGetOrderResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "order": {
+          "$ref": "#/definitions/protobufOrderEntity"
+        }
+      }
+    },
+    "protobufGetRelevantOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufOrderEntity"
+          }
+        }
+      }
+    },
+    "protobufLoginRequest": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufMarkOrderAsDoneResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufOrderEntity": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "AuthorID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "BuyerID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Price": {
+          "type": "string",
+          "format": "int64"
+        },
+        "CreatedAt": {
+          "type": "string"
+        },
+        "UpdatedAt": {
+          "type": "string"
+        },
+        "ClosedAt": {
+          "type": "string"
+        },
+        "DeletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufOrderEntityNoID": {
+      "type": "object",
+      "properties": {
+        "AuthorID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "BuyerID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Price": {
+          "type": "string",
+          "format": "int64"
+        },
+        "CreatedAt": {
+          "type": "string"
+        },
+        "UpdatedAt": {
+          "type": "string"
+        },
+        "ClosedAt": {
+          "type": "string"
+        },
+        "DeletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufSearchOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufOrderEntity"
+          }
+        }
+      }
+    },
+    "protobufUpdateOrderResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufUpdateUserRequest": {
+      "type": "object",
+      "properties": {
+        "bio": {
+          "type": "string"
+        },
+        "categories_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "protobufUpdateUserResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
