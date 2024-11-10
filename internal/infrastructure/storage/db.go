@@ -3,6 +3,7 @@ package storage
 import (
 	"database/sql"
 
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage/migrations"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories/abstract"
@@ -13,6 +14,10 @@ func NewDB(dsn string) abstract.QueryMaker {
 	conn, err := sql.Open("pgx", dsn)
 	if err != nil {
 		logger.Debugln("could not connect to db ", err.Error())
+		panic(err)
+	}
+	err = migrations.RunMigrationsOnConnection(conn)
+	if err != nil {
 		panic(err)
 	}
 

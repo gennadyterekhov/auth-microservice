@@ -5,14 +5,10 @@ import (
 	"database/sql"
 	"fmt"
 	"math/rand"
-	"path"
 
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage/migrations"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
-	"github.com/gennadyterekhov/auth-microservice/internal/project"
 	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/pkg/errors"
-
-	"github.com/pressly/goose"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
@@ -82,27 +78,10 @@ func runMigrations(dbURL string) error {
 		}
 	}(db)
 
-	err = runMigrationsOnConnection(db)
+	err = migrations.RunMigrationsOnConnection(db)
 	if err != nil {
 		return fmt.Errorf("failed to run migrations: " + err.Error())
 	}
 
 	return nil
-}
-
-func runMigrationsOnConnection(db *sql.DB) error {
-	dir, err := getMigrationsDir()
-	if err != nil {
-		return err
-	}
-	return goose.Up(db, dir)
-}
-
-func getMigrationsDir() (string, error) {
-	pr, err := project.GetProjectRoot()
-	if err != nil {
-		return "", errors.Wrap(err, "error getting project root")
-	}
-
-	return path.Join(pr, "migrations"), nil
 }
