@@ -4,7 +4,7 @@ import (
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/services"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/login"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/register"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/serializer"
+	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
 )
 
 type Controllers struct {
@@ -12,9 +12,9 @@ type Controllers struct {
 	Login    login.Controller
 }
 
-func NewControllers(servs *services.Services, pack *serializer.Pack) *Controllers {
+func NewControllers(servs *services.Services, pack *serializers.Base) *Controllers {
 	return &Controllers{
-		Register: register.NewController(servs.Register, pack.Register),
-		Login:    login.NewController(servs.Login, pack.Login),
+		Register: register.NewController(servs.Register, pack),
+		Login:    login.NewController(servs.Login, pack),
 	}
 }

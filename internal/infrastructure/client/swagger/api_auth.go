@@ -15,8 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/client/swagger/models"
 )
 
 // Linger please
@@ -33,13 +31,13 @@ AuthApiService
 
 @return ProtobufLoginResponse
 */
-func (a *AuthApiService) ArtDealersLogin(ctx context.Context, body models.ProtobufLoginRequest) (models.ProtobufLoginResponse, *http.Response, error) {
+func (a *AuthApiService) AuthMicroserviceLogin(ctx context.Context, body ProtobufLoginRequest) (ProtobufLoginResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue models.ProtobufLoginResponse
+		localVarReturnValue ProtobufLoginResponse
 	)
 
 	// create path and map variables
@@ -97,7 +95,7 @@ func (a *AuthApiService) ArtDealersLogin(ctx context.Context, body models.Protob
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v models.ProtobufLoginResponse
+			var v ProtobufLoginResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -108,7 +106,7 @@ func (a *AuthApiService) ArtDealersLogin(ctx context.Context, body models.Protob
 		}
 
 		if localVarHttpResponse.StatusCode == 0 {
-			var v models.RuntimeError
+			var v RuntimeError
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -131,13 +129,13 @@ AuthApiService
 
 @return ProtobufRegisterResponse
 */
-func (a *AuthApiService) ArtDealersRegister(ctx context.Context, body models.ProtobufRegisterRequest) (models.ProtobufRegisterResponse, *http.Response, error) {
+func (a *AuthApiService) AuthMicroserviceRegister(ctx context.Context, body ProtobufRegisterRequest) (ProtobufRegisterResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue models.ProtobufRegisterResponse
+		localVarReturnValue ProtobufRegisterResponse
 	)
 
 	// create path and map variables
@@ -195,7 +193,7 @@ func (a *AuthApiService) ArtDealersRegister(ctx context.Context, body models.Pro
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v models.ProtobufRegisterResponse
+			var v ProtobufRegisterResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -206,7 +204,7 @@ func (a *AuthApiService) ArtDealersRegister(ctx context.Context, body models.Pro
 		}
 
 		if localVarHttpResponse.StatusCode == 0 {
-			var v models.RuntimeError
+			var v RuntimeError
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -46,14 +46,6 @@ type APIClient struct {
 	// API Services
 
 	AuthApi *AuthApiService
-
-	CategoryApi *CategoryApiService
-
-	OrderApi *OrderApiService
-
-	SearchApi *SearchApiService
-
-	UserApi *UserApiService
 }
 
 type service struct {
@@ -73,10 +65,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AuthApi = (*AuthApiService)(&c.common)
-	c.CategoryApi = (*CategoryApiService)(&c.common)
-	c.OrderApi = (*OrderApiService)(&c.common)
-	c.SearchApi = (*SearchApiService)(&c.common)
-	c.UserApi = (*UserApiService)(&c.common)
 
 	return c
 }
@@ -174,8 +162,8 @@ func (c *APIClient) prepareRequest(
 	queryParams url.Values,
 	formParams url.Values,
 	fileName string,
-	fileBytes []byte,
-) (localVarRequest *http.Request, err error) {
+	fileBytes []byte) (localVarRequest *http.Request, err error) {
+
 	var body *bytes.Buffer
 
 	// Detect postBody type and post.
@@ -322,17 +310,17 @@ func (c *APIClient) prepareRequest(
 }
 
 func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err error) {
-	if strings.Contains(contentType, "application/xml") {
-		if err = xml.Unmarshal(b, v); err != nil {
-			return err
+		if strings.Contains(contentType, "application/xml") {
+			if err = xml.Unmarshal(b, v); err != nil {
+				return err
+			}
+			return nil
+		} else if strings.Contains(contentType, "application/json") {
+			if err = json.Unmarshal(b, v); err != nil {
+				return err
+			}
+			return nil
 		}
-		return nil
-	} else if strings.Contains(contentType, "application/json") {
-		if err = json.Unmarshal(b, v); err != nil {
-			return err
-		}
-		return nil
-	}
 	return errors.New("undefined response type")
 }
 

@@ -48,14 +48,14 @@ func (r *Router) initializeRoutes() {
 
 	routes := Routes{
 		Route{
-			"ArtDealersLogin",
+			"AuthMicroserviceLogin",
 			strings.ToUpper("Post"),
 			"/api/login",
 			login.Handler(&r.Controllers.Login).ServeHTTP,
 		},
 
 		Route{
-			"ArtDealersRegister",
+			"AuthMicroserviceRegister",
 			strings.ToUpper("Post"),
 			"/api/register",
 			register.Handler(&r.Controllers.Register).ServeHTTP,

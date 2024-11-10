@@ -1,7 +1,6 @@
 package config
 
 import (
-	"flag"
 	"os"
 	"path"
 
@@ -20,40 +19,6 @@ func New() *Config {
 }
 
 func getConfig() *Config {
-	var addressFlag *string
-	var DBDsnFlag *string
-
-	if flag.Lookup("a") == nil {
-		addressFlag = flag.String(
-			"a",
-			"localhost:8080",
-			"[address] Net address host:port without protocol",
-		)
-	}
-	if flag.Lookup("d") == nil {
-		DBDsnFlag = flag.String(
-			"d",
-			"",
-			"[db dsn] format: `host=%s user=%s password=%s dbname=%s sslmode=%s`",
-		)
-	}
-
-	flag.Parse()
-	flags := Config{}
-
-	if addressFlag != nil {
-		flags.Addr = *addressFlag
-	}
-	if DBDsnFlag != nil {
-		flags.DBDsn = *DBDsnFlag
-	}
-
-	overwriteWithEnv(&flags)
-
-	return &flags
-}
-
-func overwriteWithEnv(flags *Config) {
 	pr, err := project.GetProjectRoot()
 	if err != nil {
 		logger.Errorln("could not find project root", err.Error())
@@ -64,16 +29,10 @@ func overwriteWithEnv(flags *Config) {
 		logger.Errorln("could not load env file", err.Error())
 	}
 
-	flags.Addr = getAddress(flags.Addr)
-	flags.DBDsn = getDBDsn(flags.DBDsn)
-}
-
-func getAddress(current string) string {
-	return getStringFromEnvOrFallback("RUN_ADDRESS", current)
-}
-
-func getDBDsn(current string) string {
-	return getStringFromEnvOrFallback("DATABASE_URI", current)
+	return &Config{
+		Addr:  getStringFromEnvOrFallback("RUN_ADDRESS", "localhost:8080"),
+		DBDsn: getStringFromEnvOrFallback("DATABASE_URI", "host=psql port=5432 user=authmcrsrv_user password=authmcrsrv_pass dbname=authmcrsrv_db sslmode=disable"),
+	}
 }
 
 func getStringFromEnvOrFallback(envKey string, fallback string) string {
