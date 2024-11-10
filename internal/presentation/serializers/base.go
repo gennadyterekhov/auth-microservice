@@ -8,22 +8,13 @@ import (
 
 type Base struct{}
 
-var _ serializer.Serializer = NewBase()
+var _ serializer.Serializer = New()
 
-func NewBase() *Base {
+func New() *Base {
 	return &Base{}
 }
 
 func (s *Base) Serialize(data interface{}) ([]byte, error) {
-	serialized, err := json.Marshal(data)
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return serialized, nil
-}
-
-func (s *Base) SerializeOne(data interface{}) ([]byte, error) {
 	serialized, err := json.Marshal(data)
 	if err != nil {
 		return []byte{}, err

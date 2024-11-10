@@ -58,14 +58,9 @@ type Configuration struct {
 	HTTPClient    *http.Client
 }
 
-func NewConfiguration(isHttps bool) *Configuration {
-	proto := "http"
-
-	if isHttps {
-		proto = "https"
-	}
+func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      proto + "://localhost:8080",
+		BasePath:      "https://localhost",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 	}
