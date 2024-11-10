@@ -26,3 +26,7 @@ get_total_coverage_percentage:
 coverage_html_ui:
 	./scripts/html_with_better_ui.sh
 
+build:
+	env GOOS=linux GOARCH=amd64 go build ./cmd/server
+	env GOOS=darwin GOARCH=amd64 go build ./cmd/server
+	env GOOS=darwin GOARCH=arm64 go build ./cmd/server
