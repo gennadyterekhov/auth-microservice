@@ -12,6 +12,8 @@ services:
       - ./.env:/var/www/.env
       - ./migrations:/var/www/migrations
       - ./cmd/server/server_linux_amd64:/var/www/server_linux_amd64
+    ports:
+      - "8080:8080"
 
   psql:
     image: postgres:17-alpine
