@@ -18,31 +18,18 @@ type RepositoryMock struct {
 	lastUsedCategoryID               int64
 	lastUsedOrderCategoryID          int64
 	lastUsedCategoryFollowedByUserID int64
-	orders                           map[int64]*models2.Order
-	categories                       map[int64]*models2.Category
-	categoriesFollowedByUsers        map[string]*models2.CategoryFollowedByUser
-	ordersCategories                 map[string]*models2.OrderCategory
 }
 
 var _ repositories.RepositoryInterface = &RepositoryMock{}
 
 func NewMock() *RepositoryMock {
 	return &RepositoryMock{
-		users:                     make(map[int64]*models2.User),
-		orders:                    make(map[int64]*models2.Order),
-		categories:                make(map[int64]*models2.Category),
-		categoriesFollowedByUsers: make(map[string]*models2.CategoryFollowedByUser),
-		ordersCategories:          make(map[string]*models2.OrderCategory),
+		users: make(map[int64]*models2.User),
 	}
 }
 
 func (repo *RepositoryMock) Clear() {
 	repo.users = make(map[int64]*models2.User)
-	repo.orders = make(map[int64]*models2.Order)
-
-	repo.categories = make(map[int64]*models2.Category)
-	repo.categoriesFollowedByUsers = make(map[string]*models2.CategoryFollowedByUser)
-	repo.ordersCategories = make(map[string]*models2.OrderCategory)
 }
 
 // users
