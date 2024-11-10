@@ -7,4 +7,4 @@ cat artefacts/coverage/coverage.temp.out | grep -v "/repository_mock" > artefact
 rm artefacts/coverage/coverage.temp.out
 
 go tool cover -func artefacts/coverage/coverage.out > artefacts/coverage/coverage.txt.out
-cat artefacts/coverage/coverage.txt.out | tail -n 1
+cat artefacts/coverage/coverage.txt.out | tail -n 1 | cut -f20
