@@ -44,7 +44,3 @@ func (repo *RepositoryErrorMock) SelectUserByID(context.Context, int64) (*models
 func (repo *RepositoryErrorMock) SelectUserByLogin(context.Context, string) (*models2.User, error) {
 	return nil, repo.err
 }
-
-func (repo *RepositoryErrorMock) UpdateUser(context.Context, int64, string) error {
-	return repo.err
-}

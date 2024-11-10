@@ -6,10 +6,10 @@ import (
 	"github.com/gennadyterekhov/auth-microservice/internal/models"
 )
 
-func (repo *Repository) InsertUser(ctx context.Context, login, password, bio string) (*models.User, error) {
-	const query = `INSERT INTO users ( login, password, bio) VALUES ( $1, $2, $3) RETURNING id;`
+func (repo *Repository) InsertUser(ctx context.Context, login, password string) (*models.User, error) {
+	const query = `INSERT INTO users ( login, password) VALUES ( $1, $2, ) RETURNING id;`
 
-	row := repo.DB.QueryRowContext(ctx, query, login, password, bio)
+	row := repo.DB.QueryRowContext(ctx, query, login, password)
 	if row.Err() != nil {
 		return nil, row.Err()
 	}
@@ -24,7 +24,6 @@ func (repo *Repository) InsertUser(ctx context.Context, login, password, bio str
 		ID:       id,
 		Login:    login,
 		Password: password,
-		Bio:      bio,
 	}
 
 	return &user, nil
@@ -60,15 +59,4 @@ func (repo *Repository) SelectUserByLogin(ctx context.Context, login string) (*m
 	}
 
 	return &user, nil
-}
-
-func (repo *Repository) UpdateUser(ctx context.Context, id int64, bio string) error {
-	const query = `UPDATE users SET bio = $2 WHERE id = $1;`
-
-	_, err := repo.DB.ExecContext(ctx, query, id, bio)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

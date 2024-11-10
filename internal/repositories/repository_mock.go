@@ -49,7 +49,6 @@ func (repo *RepositoryMock) InsertUser(ctx context.Context, login string, passwo
 		ID:       newID,
 		Login:    login,
 		Password: password,
-		Bio:      bio,
 	}
 
 	repo.users[newID] = user
@@ -74,14 +73,4 @@ func (repo *RepositoryMock) SelectUserByLogin(_ context.Context, login string) (
 	}
 
 	return nil, nil
-}
-
-func (repo *RepositoryMock) UpdateUser(_ context.Context, id int64, bio string) error {
-	_, ok := repo.users[id]
-	if ok {
-		repo.users[id].Bio = bio
-		return nil
-	}
-
-	return fmt.Errorf("user with id %d not found", id)
 }
