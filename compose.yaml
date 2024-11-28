@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: devops/app.dockerfile
-#      dockerfile: devops/dev.dockerfile # for fast dev feedback
     environment:
       # we must override the host. here host is name of compose service, docker resolves it
       DATABASE_URI: 'host=psql port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB} sslmode=disable'
