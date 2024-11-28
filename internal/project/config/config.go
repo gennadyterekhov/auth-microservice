@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"path"
 
@@ -19,8 +20,13 @@ type Config struct {
 	DBDsn string
 }
 
-func New() *Config {
-	return getConfig()
+func New() (*Config, error) {
+	conf := getConfig()
+
+	if conf.Addr == "" || conf.DBDsn == "" {
+		return nil, fmt.Errorf("some required values are empty")
+	}
+	return conf, nil
 }
 
 func getConfig() *Config {
