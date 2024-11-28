@@ -16,12 +16,12 @@ import (
 )
 
 type loginTest struct {
-	suites.WithService
+	suites.WithFactory
 	Service *auth.Service
 }
 
 type loginErrorsTest struct {
-	suites.WithService
+	suites.WithFactory
 	Service *auth.Service
 }
 
@@ -34,12 +34,12 @@ func TestLoginErrors(t *testing.T) {
 }
 
 func (suite *loginTest) SetupSuite() {
-	inits.InitServiceSuite(suite, nil)
+	inits.InitFactorySuite(suite)
 	suite.Service = auth.NewService(suite.GetRepository())
 }
 
 func (suite *loginErrorsTest) SetupSuite() {
-	inits.InitServiceSuite(suite, nil)
+	inits.InitFactorySuite(suite)
 	suite.SetRepository(storageRepo.NewErrorMock())
 	suite.Service = auth.NewService(suite.GetRepository())
 }

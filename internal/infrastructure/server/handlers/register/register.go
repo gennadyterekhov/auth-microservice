@@ -6,32 +6,21 @@ import (
 
 	domain "github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
 	"github.com/gennadyterekhov/auth-microservice/internal/dtos/requests"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/serializer"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/middleware"
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
 )
 
 type Controller struct {
-	Service    *domain.Service
-	Serializer serializer.Interface
+	Service *domain.Service
 }
 
-func NewController(service *domain.Service, serializer serializer.Interface) *Controller {
+func NewController(service *domain.Service) *Controller {
 	return &Controller{
-		Service:    service,
-		Serializer: serializer,
+		Service: service,
 	}
 }
 
-func Handler(controller *Controller) http.Handler {
-	return middleware.WithoutAuth(
-		http.HandlerFunc(controller.register),
-		middleware.RequestContentTypeJSON,
-		middleware.ResponseContentTypeJSON,
-	)
-}
-
-func (controller *Controller) register(res http.ResponseWriter, req *http.Request) {
+func (controller *Controller) Register(res http.ResponseWriter, req *http.Request) {
 	logger.Debugln("/api/user/register handler")
 
 	var err error
@@ -61,7 +50,7 @@ func (controller *Controller) register(res http.ResponseWriter, req *http.Reques
 	}
 	res.Header().Set("Authorization", resDto.Token)
 
-	resBody, err := controller.Serializer.Serialize(resDto)
+	resBody, err := serializers.Serialize(resDto)
 	if err != nil {
 		logger.Errorln(err.Error())
 

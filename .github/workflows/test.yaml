@@ -1,5 +1,5 @@
 name: Test
-on: [push, pull_request, workflow_dispatch]
+on: [pull_request, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,10 +15,6 @@ jobs:
       - name: Calculate coverage
         run: |
           ./scripts/get_test_coverage_percentages.sh > artefacts/coverage.txt
-
-      - name: Extract coverage percentage
-        id: extract_coverage
-        run: |
           COVERAGE=$(cat artefacts/coverage.txt)
           echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 

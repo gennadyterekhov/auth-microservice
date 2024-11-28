@@ -24,16 +24,6 @@ func (suite *WithFactory) TestCanGetFactory() {
 	require.NotNil(suite.T(), suite.GetFactory())
 }
 
-func TestServiceSuite(t *testing.T) {
-	suite.Run(t, new(WithService))
-}
-
-func (suite *WithService) TestCanGetService() {
-	require.NotNil(suite.T(), suite.GetRepository())
-	require.NotNil(suite.T(), suite.GetFactory())
-	require.Nil(suite.T(), suite.GetService())
-}
-
 func TestServerSuite(t *testing.T) {
 	suite.Run(t, new(WithServer))
 }

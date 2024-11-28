@@ -2,11 +2,11 @@ package register
 
 import (
 	"bytes"
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
-	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/inits"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/suites"
 	"github.com/stretchr/testify/require"
@@ -24,7 +24,7 @@ func TestRegisterHandler(t *testing.T) {
 func (suite *registerSuite) SetupSuite() {
 	inits.InitFactorySuite(suite)
 
-	suite.SetServer(httptest.NewServer(Handler(NewController(register.NewService(suite.GetRepository()), serializers.New()))))
+	suite.SetServer(httptest.NewServer(http.HandlerFunc(NewController(register.NewService(suite.GetRepository())).Register)))
 }
 
 func (suite *registerSuite) TestCannotRegisterAlreadyPresent() {

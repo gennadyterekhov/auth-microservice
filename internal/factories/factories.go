@@ -6,7 +6,6 @@ import (
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
 	"github.com/gennadyterekhov/auth-microservice/internal/dtos/requests"
 	"github.com/gennadyterekhov/auth-microservice/internal/dtos/responses"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/client/auth"
 	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
 )
 
@@ -24,11 +23,6 @@ func (f *Factory) RegisterForTest(login string, password string) *responses.Regi
 	reqDto := &requests.Register{Login: login, Password: password}
 	service := register.NewService(f.repo)
 	resDto, err := service.Register(context.Background(), reqDto)
-	if err != nil {
-		panic(err)
-	}
-
-	err = auth.SetToken(resDto.Token)
 	if err != nil {
 		panic(err)
 	}

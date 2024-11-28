@@ -13,7 +13,7 @@ import (
 )
 
 type WithServer struct {
-	WithService
+	WithFactory
 	server *httptest.Server
 }
 

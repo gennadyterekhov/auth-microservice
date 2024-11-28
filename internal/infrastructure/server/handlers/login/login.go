@@ -7,32 +7,21 @@ import (
 
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth"
 	"github.com/gennadyterekhov/auth-microservice/internal/dtos/requests"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/serializer"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/middleware"
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
 )
 
 type Controller struct {
-	Service    *auth.Service
-	Serializer serializer.Interface
+	Service *auth.Service
 }
 
-func NewController(service *auth.Service, serializer serializer.Interface) *Controller {
+func NewController(service *auth.Service) *Controller {
 	return &Controller{
-		Service:    service,
-		Serializer: serializer,
+		Service: service,
 	}
 }
 
-func Handler(controller *Controller) http.Handler {
-	return middleware.WithoutAuth(
-		http.HandlerFunc(controller.login),
-		middleware.RequestContentTypeJSON,
-		middleware.ResponseContentTypeJSON,
-	)
-}
-
-func (controller *Controller) login(res http.ResponseWriter, req *http.Request) {
+func (controller *Controller) Login(res http.ResponseWriter, req *http.Request) {
 	logger.Debugln("/api/user/login handler")
 
 	reqDto, err := getRequestDto(req)
@@ -56,7 +45,7 @@ func (controller *Controller) login(res http.ResponseWriter, req *http.Request) 
 	}
 	res.Header().Set("Authorization", resDto.Token)
 
-	resBody, err := controller.Serializer.Serialize(resDto)
+	resBody, err := serializers.Serialize(resDto)
 	if err != nil {
 		logger.Errorln(err.Error())
 		http.Error(res, err.Error(), http.StatusInternalServerError)

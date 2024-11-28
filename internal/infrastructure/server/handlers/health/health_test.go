@@ -1,6 +1,7 @@
 package health
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
@@ -21,7 +22,7 @@ func TestHealthHandler(t *testing.T) {
 func (suite *healthSuite) SetupSuite() {
 	inits.InitFactorySuite(suite)
 
-	suite.SetServer(httptest.NewServer(Handler(NewController())))
+	suite.SetServer(httptest.NewServer(http.HandlerFunc(Health)))
 }
 
 func (suite *healthSuite) TestHealth() {
