@@ -29,6 +29,11 @@ coverage_ctrf:
 coverage_html_ui:
 	./scripts/html_with_better_ui.sh
 
+# convenience cmd for one-time use on project setup
+generate_tls_certs:
+	openssl genrsa -out certificates/server.key 2048
+	openssl req -new -x509 -sha256 -key certificates/server.key -out certificates/server.crt -days 3650
+
 dev:
 	GOOS=linux GOARCH=amd64 go build -o ./cmd/server/server_linux_amd64  ./cmd/server
 	docker build --tag 'auth_microservice_dev' -f devops/dev.dockerfile .
