@@ -17,8 +17,12 @@ FROM alpine:latest
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the binary from the builder stage
+# Copy the required files from the builder stage
 COPY --from=builder /app/cmd/server/server_linux_amd64 .
+COPY --from=builder /app/.env .
+COPY --from=builder /app/go.mod .
+COPY --from=builder /app/certificates/server.crt ./certificates/server.crt
+COPY --from=builder /app/certificates/server.key ./certificates/server.key
 
 # Expose the port the app runs on
 EXPOSE 8080
