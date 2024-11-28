@@ -36,7 +36,11 @@ func InitDbSuite[T interfaces.WithDb](genericSuite T) {
 	}
 
 	if genericSuite.GetRepository() == nil {
-		repo := storage.NewRepo(dbDsn)
+		repo, err := storage.NewRepo(dbDsn)
+		if err != nil {
+			logger.Debugln(err.Error())
+			panic(err)
+		}
 		repo.Clear()
 		genericSuite.SetRepository(repo)
 	}

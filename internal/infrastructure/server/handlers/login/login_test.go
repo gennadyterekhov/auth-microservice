@@ -2,11 +2,11 @@ package login
 
 import (
 	"bytes"
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth"
-	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/inits"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/suites"
 	"github.com/stretchr/testify/require"
@@ -24,7 +24,7 @@ func TestLoginHandler(t *testing.T) {
 func (suite *loginSuite) SetupSuite() {
 	inits.InitFactorySuite(suite)
 
-	suite.SetServer(httptest.NewServer(Handler(NewController(auth.NewService(suite.GetRepository()), serializers.New()))))
+	suite.SetServer(httptest.NewServer(http.HandlerFunc(NewController(auth.NewService(suite.GetRepository())).Login)))
 }
 
 func (suite *loginSuite) TestCannotLoginNoUser() {

@@ -8,16 +8,14 @@ import (
 )
 
 func TestCanSerialize(t *testing.T) {
-	s := New()
-
 	log := &responses.Login{Token: "hello"}
-	bts, err := s.Serialize(log)
+	bts, err := Serialize(log)
 
 	require.NoError(t, err)
 	require.Equal(t, `{"token":"hello"}`, string(bts))
 
 	reg := &responses.Register{ID: 1, Token: "hello"}
-	bts, err = s.Serialize(reg)
+	bts, err = Serialize(reg)
 
 	require.NoError(t, err)
 	require.Equal(t, `{"id":1,"token":"hello"}`, string(bts))

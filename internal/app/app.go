@@ -5,7 +5,6 @@ import (
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/controllers"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/swagger/swagrouter"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage"
-	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories"
 	"github.com/gorilla/mux"
 )
@@ -26,8 +25,7 @@ func New(dsn string) (*App, error) {
 	}
 
 	servs := services.New(repo)
-	serPack := serializers.New()
-	controllersStruct := controllers.NewControllers(servs, serPack)
+	controllersStruct := controllers.NewControllers(servs)
 
 	routerInstance := swagrouter.NewRouter(controllersStruct)
 

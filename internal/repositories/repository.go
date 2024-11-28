@@ -1,24 +1,43 @@
 package repositories
 
 import (
+	"context"
+	"database/sql"
+
 	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
-	"github.com/gennadyterekhov/auth-microservice/internal/repositories/abstract"
+	"github.com/gennadyterekhov/auth-microservice/internal/models"
 )
+
+type queryMaker interface {
+	QueryContext(ctx context.Context, query string, args ...any) (*sql.Rows, error)
+	QueryRowContext(ctx context.Context, query string, args ...any) *sql.Row
+	Exec(query string, args ...any) (sql.Result, error)
+	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
+	Ping() error
+	Close() error
+}
 
 // Repository is a single point of access to the database. it's not divided between entities - one repo for all
 type Repository struct {
-	DB abstract.QueryMaker
+	DB queryMaker
 }
 
-func New(db abstract.QueryMaker) *Repository {
+// Scannable interface for generic scan behavior
+type Scannable interface {
+	ScanRow(row *sql.Row) error
+}
+
+var _ Scannable = &models.User{}
+
+func New(db queryMaker) *Repository {
 	return &Repository{
 		DB: db,
 	}
 }
 
 var (
-	_ repositories.RepositoryInterface = NewMock()
+	_ repositories.RepositoryInterface = NewErrorMock()
 	_ repositories.RepositoryInterface = New(nil)
 )
 

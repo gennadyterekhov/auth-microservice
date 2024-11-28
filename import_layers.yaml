@@ -19,12 +19,9 @@
     "internal/tests/suites",
 
     "internal/infrastructure/protobuf",
-    "internal/infrastructure/client", # generated grpc client
     "internal/factories",
     "internal/infrastructure/storage", # real db conn, depends on pgx
     "internal/infrastructure/server", # generated grpc server + custom handlers
-
-    "internal/presentation",
 
     "internal/app", # actual instance of an application must be lowest because it creates structs from other layers
   ]

@@ -23,9 +23,6 @@ revive:
 get_total_coverage_percentage:
 	./scripts/get_test_coverage_percentages.sh
 
-coverage_ctrf:
-	go test -json ./... | go-ctrf-json-reporter -output artefacts/ctrf-report.json
-
 coverage_html_ui:
 	./scripts/html_with_better_ui.sh
 

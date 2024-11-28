@@ -7,8 +7,8 @@ import (
 )
 
 func TestConfig(t *testing.T) {
-	conf := New()
-
+	conf, err := New()
+	require.NoError(t, err)
 	require.Equal(t, defaultAddr, conf.Addr)
 	require.Equal(t, defaultDbUrl, conf.DBDsn)
 }

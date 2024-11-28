@@ -14,13 +14,13 @@ import (
 )
 
 type testSuite struct {
-	suites.WithService
+	suites.WithFactory
 	Service *register.Service
 }
 
 func (suite *testSuite) SetupSuite() {
 	fmt.Println("(suite *testSuite) SetupSuite() in pkg")
-	inits.InitServiceSuite(suite, nil)
+	inits.InitFactorySuite(suite)
 	suite.Service = register.NewService(suite.GetRepository())
 }
 
