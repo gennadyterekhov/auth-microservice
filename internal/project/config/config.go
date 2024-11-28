@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	defaultAddr  = "localhost:8080"
+	defaultAddr  = "0.0.0.0:8080"
 	defaultDbUrl = "host=psql port=5432 user=authmcrsrv_user password=authmcrsrv_pass dbname=authmcrsrv_db sslmode=disable"
 )
 
