@@ -8,10 +8,9 @@ services:
     depends_on:
       - psql
     volumes:
-      - ./go.mod:/var/www/go.mod
-      - ./.env:/var/www/.env
-      - ./migrations:/var/www/migrations
-      - ./cmd/server/server_linux_amd64:/var/www/server_linux_amd64
+      - ./go.mod:/app/go.mod
+      - ./.env:/app/.env
+      - ./migrations:/app/migrations
     ports:
       - "8080:8080"
     networks:
