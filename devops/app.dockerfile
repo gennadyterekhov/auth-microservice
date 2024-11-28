@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 RUN go mod download
 
-RUN GOOS=linux GOARCH=amd64 go build  -o ./cmd/server/server_linux_amd64  ./cmd/server
+RUN GOOS=linux GOARCH=amd64 go build  -o ./bin/server_linux_amd64  ./cmd/server
 
 
 # Stage 2: Create a smaller image with the built binary
@@ -18,7 +18,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Copy the required files from the builder stage
-COPY --from=builder /app/cmd/server/server_linux_amd64 .
+COPY --from=builder /app/bin/server_linux_amd64 .
 COPY --from=builder /app/.env .
 COPY --from=builder /app/go.mod .
 COPY --from=builder /app/certificates/server.crt ./certificates/server.crt
