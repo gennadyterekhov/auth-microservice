@@ -1,30 +1,29 @@
 package app
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/services"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/controllers"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/swagger/swagrouter"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage"
 	"github.com/gennadyterekhov/auth-microservice/internal/presentation/serializers"
-	"github.com/gennadyterekhov/auth-microservice/internal/project/config"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories"
+	"github.com/gorilla/mux"
 )
 
 type App struct {
-	ServerConfig *config.Config
-	Repo         *repositories.Repository
-	Router       *swagrouter.Router
+	addr     string
+	router   *swagrouter.Router
+	repo     *repositories.Repository
+	services *services.Services
 }
 
-func New() *App {
+func New(dsn string) (*App, error) {
 	app := &App{}
 
-	serverConfig := config.New()
-
-	repo := storage.NewRepo(serverConfig.DBDsn)
+	repo, err := storage.NewRepo(dsn)
+	if err != nil {
+		return nil, err
+	}
 
 	servs := services.New(repo)
 	serPack := serializers.New()
@@ -32,16 +31,21 @@ func New() *App {
 
 	routerInstance := swagrouter.NewRouter(controllersStruct)
 
-	app.ServerConfig = serverConfig
-	app.Repo = repo
-	app.Router = routerInstance
+	app.router = routerInstance
+	app.repo = repo
+	app.services = servs
 
-	return app
+	return app, nil
 }
 
-func (a App) StartServer() error {
-	fmt.Printf("Server started on %v\n", a.ServerConfig.Addr)
-	err := http.ListenAndServe(a.ServerConfig.Addr, a.Router.Router)
+func (a App) Router() *mux.Router {
+	return a.router.Router
+}
 
-	return err
+func (a App) Repository() *repositories.Repository {
+	return a.repo
+}
+
+func (a App) Services() *services.Services {
+	return a.services
 }

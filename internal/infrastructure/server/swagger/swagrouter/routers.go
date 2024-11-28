@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/controllers"
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/health"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/login"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/register"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/swagger"
@@ -60,7 +61,15 @@ func (r *Router) initializeRoutes() {
 			"/api/register",
 			register.Handler(r.Controllers.Register).ServeHTTP,
 		},
+
+		Route{
+			"Health",
+			strings.ToUpper("Get"),
+			"/health",
+			health.Handler(r.Controllers.Health).ServeHTTP,
+		},
 		// TODO add check, forget endpoints
+		// TODO refactor like in main proj
 	}
 
 	for _, route := range routes {

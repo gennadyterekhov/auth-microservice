@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"path"
 
@@ -10,7 +11,7 @@ import (
 )
 
 const (
-	defaultAddr  = "localhost:8080"
+	defaultAddr  = "0.0.0.0:8080"
 	defaultDbUrl = "host=psql port=5432 user=authmcrsrv_user password=authmcrsrv_pass dbname=authmcrsrv_db sslmode=disable"
 )
 
@@ -19,8 +20,13 @@ type Config struct {
 	DBDsn string
 }
 
-func New() *Config {
-	return getConfig()
+func New() (*Config, error) {
+	conf := getConfig()
+
+	if conf.Addr == "" || conf.DBDsn == "" {
+		return nil, fmt.Errorf("some required values are empty")
+	}
+	return conf, nil
 }
 
 func getConfig() *Config {
