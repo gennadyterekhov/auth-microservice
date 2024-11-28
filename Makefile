@@ -29,7 +29,12 @@ coverage_ctrf:
 coverage_html_ui:
 	./scripts/html_with_better_ui.sh
 
-build:
+dev:
+	GOOS=linux GOARCH=amd64 go build -o ./cmd/server/server_linux_amd64  ./cmd/server
+	docker build --tag 'auth_microservice_dev' -f devops/dev.dockerfile .
+	docker run -p 8080:8080 'auth_microservice_dev'
+
+build_native:
 	GOOS=linux GOARCH=amd64 go build  -o ./cmd/server/server_linux_amd64  ./cmd/server
 	GOOS=darwin GOARCH=amd64 go build -o ./cmd/server/server_darwin_amd64 ./cmd/server
 	GOOS=darwin GOARCH=arm64 go build -o ./cmd/server/server_darwin_arm64 ./cmd/server
