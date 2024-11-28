@@ -3,15 +3,14 @@ package interfaces
 import (
 	"bytes"
 	"net/http/httptest"
+	"testing"
 
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/factories"
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
 	"github.com/testcontainers/testcontainers-go"
 )
 
 type hasRepo interface {
-	SetRepository(repo repositories.RepositoryInterface)
-	GetRepository() repositories.RepositoryInterface
+	SetRepository(repo RepositoryInterface)
+	GetRepository() RepositoryInterface
 }
 
 type hasDBContainer interface {
@@ -20,14 +19,15 @@ type hasDBContainer interface {
 }
 
 type WithDb interface {
+	T() *testing.T
 	hasRepo
 	hasDBContainer
 }
 
 type WithFactory interface {
 	WithDb
-	SetFactory(fact factories.Interface)
-	GetFactory() factories.Interface
+	SetFactory(fact Interface)
+	GetFactory() Interface
 }
 
 type WithServer interface {

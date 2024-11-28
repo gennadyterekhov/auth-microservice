@@ -16,9 +16,6 @@ import (
 func CreatePostgresContainerAndRunMigrations(ctx context.Context) (testcontainers.Container, string, error) {
 	cont, dbName, err := createPostgresContainer(ctx)
 	err = runMigrations(dbName)
-	if err != nil {
-		panic(err)
-	}
 	return cont, dbName, err
 }
 
@@ -44,10 +41,7 @@ func createPostgresContainer(ctx context.Context) (testcontainers.Container, str
 	}
 
 	dbURL, err := getDbUrl(ctx, container, dbName)
-	if err != nil {
-		return nil, "", err
-	}
-	return container, dbURL, nil
+	return container, dbURL, err
 }
 
 func getDbUrl(ctx context.Context, container testcontainers.Container, dbName string) (string, error) {

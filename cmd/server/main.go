@@ -12,26 +12,29 @@ import (
 )
 
 func main() {
-	fmt.Println("server initialization")
-
-	certFilename, keyFilename, err := getTlsFilenames()
+	certFilename, keyFilename, serverConfig, appInstance, err := getDeps()
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
 
-	serverConfig, appInstance, err := getAppInstance()
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-	fmt.Println("got app instance")
-
-	fmt.Println("server initialized successfully")
-
-	fmt.Println("listening with https on " + serverConfig.Addr)
+	fmt.Println("listening on https://" + serverConfig.Addr)
 	err = http.ListenAndServeTLS(serverConfig.Addr, certFilename, keyFilename, appInstance.Router())
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
+}
+
+func getDeps() (string, string, *config.Config, *app.App, error) {
+	certFilename, keyFilename, err := getTlsFilenames()
+	if err != nil {
+		return "", "", nil, nil, err
+	}
+
+	serverConfig, appInstance, err := getAppInstance()
+	if err != nil {
+		return "", "", nil, nil, err
+	}
+	return certFilename, keyFilename, serverConfig, appInstance, nil
 }
 
 func getTlsFilenames() (string, string, error) {
@@ -48,8 +51,6 @@ func getAppInstance() (*config.Config, *app.App, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-
-	fmt.Println("got server config")
 
 	appInstance, err := app.New(serverConfig.DBDsn)
 	return serverConfig, appInstance, err

@@ -1,19 +1,20 @@
 package services
 
 import (
-	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth"
-	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
+	"github.com/gennadyterekhov/auth-microservice/internal/domain/login"
+	"github.com/gennadyterekhov/auth-microservice/internal/domain/register"
+	"github.com/gennadyterekhov/auth-microservice/internal/interfaces"
 )
 
+// Services contains all so-called services (business logic irrespective of protocol)
 type Services struct {
 	Register *register.Service
-	Login    *auth.Service
+	Login    *login.Service
 }
 
-func New(repo repositories.RepositoryInterface) *Services {
+func New(repo interfaces.RepositoryInterface) *Services {
 	return &Services{
-		Register: register.NewService(repo),
-		Login:    auth.NewService(repo),
+		Register: register.New(repo),
+		Login:    login.New(repo),
 	}
 }

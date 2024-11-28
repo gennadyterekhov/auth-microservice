@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
+	"github.com/gennadyterekhov/auth-microservice/internal/interfaces"
 	models2 "github.com/gennadyterekhov/auth-microservice/internal/models"
 	"github.com/stretchr/testify/mock"
 )
@@ -15,7 +15,7 @@ type RepositoryErrorMock struct {
 	err error
 }
 
-var _ repositories.RepositoryInterface = &RepositoryErrorMock{}
+var _ interfaces.RepositoryInterface = &RepositoryErrorMock{}
 
 func NewErrorMock() *RepositoryErrorMock {
 	return &RepositoryErrorMock{

@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
+	"github.com/gennadyterekhov/auth-microservice/internal/interfaces"
 	"github.com/gennadyterekhov/auth-microservice/internal/logger"
 	"github.com/gennadyterekhov/auth-microservice/internal/models"
 )
@@ -37,8 +37,8 @@ func New(db queryMaker) *Repository {
 }
 
 var (
-	_ repositories.RepositoryInterface = NewErrorMock()
-	_ repositories.RepositoryInterface = New(nil)
+	_ interfaces.RepositoryInterface = NewErrorMock()
+	_ interfaces.RepositoryInterface = New(nil)
 )
 
 // Clear is used only in tests
