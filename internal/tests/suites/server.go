@@ -2,7 +2,6 @@ package suites
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/gennadyterekhov/auth-microservice/internal/interfaces"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/inits"
+	"github.com/stretchr/testify/require"
 )
 
 type WithServer struct {
@@ -20,8 +20,6 @@ type WithServer struct {
 var _ interfaces.WithServer = &WithServer{}
 
 func (s *WithServer) SetupSuite() {
-	fmt.Println("(s *WithServer) SetupSuite() ")
-	fmt.Println()
 	inits.InitFactorySuite(s)
 }
 
@@ -38,21 +36,18 @@ func (s *WithServer) SendGet(
 	token string,
 ) (int, []byte) {
 	req, err := http.NewRequest(http.MethodGet, s.GetServer().URL+path, strings.NewReader(""))
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", token)
 
 	response, err := s.GetServer().Client().Do(req)
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	bodyAsBytes, err := getBodyAsBytes(response.Body)
 	response.Body.Close()
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	return response.StatusCode, bodyAsBytes
 }
 
@@ -81,21 +76,18 @@ func (s *WithServer) SendPostAndReturnBody(
 	requestBody *bytes.Buffer,
 ) (int, []byte) {
 	req, err := http.NewRequest(http.MethodPost, s.GetServer().URL+path, requestBody)
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", token)
 
 	response, err := s.GetServer().Client().Do(req)
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	bodyAsBytes, err := getBodyAsBytes(response.Body)
 	response.Body.Close()
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(s.T(), err)
+
 	return response.StatusCode, bodyAsBytes
 }
 

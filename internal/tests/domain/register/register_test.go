@@ -2,11 +2,10 @@ package register
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
-	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
-	"github.com/gennadyterekhov/auth-microservice/internal/dtos/requests"
+	"github.com/gennadyterekhov/auth-microservice/internal/domain/register"
+	"github.com/gennadyterekhov/auth-microservice/internal/models/requests"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/inits"
 	"github.com/gennadyterekhov/auth-microservice/internal/tests/suites"
 	"github.com/stretchr/testify/assert"
@@ -19,20 +18,12 @@ type testSuite struct {
 }
 
 func (suite *testSuite) SetupSuite() {
-	fmt.Println("(suite *testSuite) SetupSuite() in pkg")
 	inits.InitFactorySuite(suite)
-	suite.Service = register.NewService(suite.GetRepository())
+	suite.Service = register.New(suite.GetRepository())
 }
 
 func TestRegisterDomain(t *testing.T) {
-	fmt.Println("TestRegisterDomain")
-	fmt.Println()
-
-	inst := new(testSuite)
-	fmt.Println("inst", inst)
-	fmt.Printf("%+v \n\n", *inst)
-
-	suite.Run(t, inst)
+	suite.Run(t, new(testSuite))
 }
 
 func (suite *testSuite) TestCanRegister() {
@@ -56,5 +47,5 @@ func (suite *testSuite) TestCannotRegisterWhenLoginAlreadyUsed() {
 	assert.NoError(suite.T(), err)
 	_, err = suite.Service.Register(context.Background(), &requests.Register{Login: "a", Password: "a"})
 	assert.Error(suite.T(), err)
-	assert.Equal(suite.T(), "ERROR: duplicate key value violates unique constraint \"users_login_key\" (SQLSTATE 23505)", err.Error())
+	assert.Equal(suite.T(), register.ErrorNotUniqueLogin, err.Error())
 }

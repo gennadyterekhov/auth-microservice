@@ -2,8 +2,8 @@ package app
 
 import (
 	"github.com/gennadyterekhov/auth-microservice/internal/domain/services"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/handlers/controllers"
-	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/server/swagger/swagrouter"
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/handlers/controllers"
+	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/router"
 	"github.com/gennadyterekhov/auth-microservice/internal/infrastructure/storage"
 	"github.com/gennadyterekhov/auth-microservice/internal/repositories"
 	"github.com/gorilla/mux"
@@ -11,7 +11,7 @@ import (
 
 type App struct {
 	addr     string
-	router   *swagrouter.Router
+	router   *router.Router
 	repo     *repositories.Repository
 	services *services.Services
 }
@@ -25,9 +25,7 @@ func New(dsn string) (*App, error) {
 	}
 
 	servs := services.New(repo)
-	controllersStruct := controllers.NewControllers(servs)
-
-	routerInstance := swagrouter.NewRouter(controllersStruct)
+	routerInstance := router.NewRouter(controllers.New(servs))
 
 	app.router = routerInstance
 	app.repo = repo

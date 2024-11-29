@@ -3,17 +3,17 @@ package factories
 import (
 	"context"
 
-	"github.com/gennadyterekhov/auth-microservice/internal/domain/auth/register"
-	"github.com/gennadyterekhov/auth-microservice/internal/dtos/requests"
-	"github.com/gennadyterekhov/auth-microservice/internal/dtos/responses"
-	"github.com/gennadyterekhov/auth-microservice/internal/interfaces/repositories"
+	"github.com/gennadyterekhov/auth-microservice/internal/domain/register"
+	"github.com/gennadyterekhov/auth-microservice/internal/interfaces"
+	"github.com/gennadyterekhov/auth-microservice/internal/models/requests"
+	"github.com/gennadyterekhov/auth-microservice/internal/models/responses"
 )
 
 type Factory struct {
-	repo repositories.RepositoryInterface
+	repo interfaces.RepositoryInterface
 }
 
-func NewFactory(repo repositories.RepositoryInterface) *Factory {
+func NewFactory(repo interfaces.RepositoryInterface) *Factory {
 	return &Factory{
 		repo: repo,
 	}
@@ -21,7 +21,7 @@ func NewFactory(repo repositories.RepositoryInterface) *Factory {
 
 func (f *Factory) RegisterForTest(login string, password string) *responses.Register {
 	reqDto := &requests.Register{Login: login, Password: password}
-	service := register.NewService(f.repo)
+	service := register.New(f.repo)
 	resDto, err := service.Register(context.Background(), reqDto)
 	if err != nil {
 		panic(err)

@@ -1,10 +1,6 @@
 {
   "Layers": [
-    "internal/consts",
-
-    "internal/dtos", # plain structs without methods and dependencies
-
-    "internal/models", # structs with methods
+    "internal/models",
 
     "internal/interfaces", # must be at least accessible from tests and domain, so need a separate layer
 
