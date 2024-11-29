@@ -22,8 +22,8 @@ services:
   psql:
     image: postgres:17-alpine
     environment:
-      POSTGRES_DB: 'authmcrsrv_db'
-      POSTGRES_USER: 'authmcrsrv_user'
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "54320:5432"
