@@ -65,11 +65,9 @@ func (r *Router) initializeRoutes() {
 			"/login",
 			middleware.Logger(
 				middleware.CorsAllowAll(
-					middleware.Auth(
-						middleware.ResponseContentTypeJSON(
-							middleware.RequestContentTypeJSON(
-								http.HandlerFunc(r.Controllers.Login.Login),
-							),
+					middleware.ResponseContentTypeJSON(
+						middleware.RequestContentTypeJSON(
+							http.HandlerFunc(r.Controllers.Login.Login),
 						),
 					),
 				),
@@ -82,11 +80,9 @@ func (r *Router) initializeRoutes() {
 			"/register",
 			middleware.Logger(
 				middleware.CorsAllowAll(
-					middleware.Auth(
-						middleware.ResponseContentTypeJSON(
-							middleware.RequestContentTypeJSON(
-								http.HandlerFunc(r.Controllers.Register.Register),
-							),
+					middleware.ResponseContentTypeJSON(
+						middleware.RequestContentTypeJSON(
+							http.HandlerFunc(r.Controllers.Register.Register),
 						),
 					),
 				),
