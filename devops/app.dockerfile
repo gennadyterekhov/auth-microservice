@@ -25,7 +25,7 @@ COPY --from=builder /app/certificates/server.crt ./certificates/server.crt
 COPY --from=builder /app/certificates/server.key ./certificates/server.key
 
 # Expose the port the app runs on
-EXPOSE 8080
+EXPOSE 8081
 
 # Command to run the application
 CMD ["/app/server_linux_amd64"]

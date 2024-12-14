@@ -5,6 +5,6 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD ["/app/cmd/server/server_linux_amd64"]
