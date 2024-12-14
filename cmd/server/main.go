@@ -45,13 +45,3 @@ func getTlsFilenames() (string, string, error) {
 
 	return path.Join(pr, "certificates", "server.crt"), path.Join(pr, "certificates", "server.key"), nil
 }
-
-func getAppInstance() (*config.Config, *app.App, error) {
-	serverConfig, err := config.New()
-	if err != nil {
-		return nil, nil, err
-	}
-
-	appInstance, err := app.New(serverConfig.DBDsn)
-	return serverConfig, appInstance, err
-}

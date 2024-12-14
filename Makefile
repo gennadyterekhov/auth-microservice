@@ -1,24 +1,5 @@
-
-generate_from_protobuf:
-	protoc -I/usr/local/include -I. \
-		-I./internal/infrastructure/protobuf \
-		-I$(go env GOPATH)/src \
-		-I../googleapis \
-		-I../grpc-gateway \
-		-I$(go env GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-		-I$(go env GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway \
-		-I$(go env GOPATH)/pkg/mod/github.com/grpc-ecosystem/grpc-gateway \
-		--go_opt=paths=source_relative \
-		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
-		--grpc-gateway_out=logtostderr=true:./internal/infrastructure/protobuf \
-		--swagger_out=allow_merge=true,merge_file_name=./internal/infrastructure/protobuf/contracts:. \
-		--go_out=plugins=grpc:./internal/infrastructure/protobuf ./internal/infrastructure/protobuf/*.proto
-
 check_imports:
 	./tools/import-layers-go ./... &> artefacts/imports.out
-
-revive:
-	revive -config revive_config.toml -formatter friendly ./... &> artefacts/linter_reports/revive.out
 
 get_total_coverage_percentage:
 	./scripts/get_test_coverage_percentages.sh
@@ -30,6 +11,15 @@ coverage_html_ui:
 generate_tls_certs:
 	openssl genrsa -out certificates/server.key 2048
 	openssl req -new -x509 -sha256 -key certificates/server.key -out certificates/server.crt -days 3650
+
+zip_for_yandex_cloud:
+	-rm artefacts/yandex_cloud.zip
+	zip -r artefacts/yandex_cloud.zip go.mod .env cmd/server/ya_cloud.go internal migrations
+
+deploy_to_yandex_cloud:
+#	.venv/bin/python3 scripts/rmVersionFromGoMod.py
+	make zip_for_yandex_cloud
+	.venv/bin/python3 scripts/deploy.py
 
 dev:
 	GOOS=linux GOARCH=amd64 go build -o ./bin/server_linux_amd64  ./cmd/server

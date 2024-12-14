@@ -4,3 +4,4 @@
 .env
 /artefacts/token
 .DS_Store
+.venv
