@@ -47,6 +47,36 @@ func (r *Router) initializeRoutes() {
 				),
 			).ServeHTTP,
 		},
+		Route{
+			"options",
+			"OPTIONS",
+			"/health",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					http.HandlerFunc(health.Options),
+				),
+			).ServeHTTP,
+		},
+		Route{
+			"options",
+			"OPTIONS",
+			"/login",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					http.HandlerFunc(health.Options),
+				),
+			).ServeHTTP,
+		},
+		Route{
+			"options",
+			"OPTIONS",
+			"/register",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					http.HandlerFunc(health.Options),
+				),
+			).ServeHTTP,
+		},
 
 		Route{
 			"Health",
