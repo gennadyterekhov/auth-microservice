@@ -17,10 +17,18 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 
-	fmt.Println("listening on https://" + serverConfig.Addr)
-	err = http.ListenAndServeTLS(serverConfig.Addr, certFilename, keyFilename, appInstance.Router())
-	if err != nil {
-		log.Fatalln(err.Error())
+	if serverConfig.IsHttps {
+		fmt.Println("listening on https://" + serverConfig.Addr)
+		err = http.ListenAndServeTLS(serverConfig.Addr, certFilename, keyFilename, appInstance.Router())
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+	} else {
+		fmt.Println("listening on http://" + serverConfig.Addr)
+		err = http.ListenAndServe(serverConfig.Addr, appInstance.Router())
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
 	}
 }
 

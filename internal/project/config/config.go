@@ -16,8 +16,9 @@ const (
 )
 
 type Config struct {
-	Addr  string
-	DBDsn string
+	Addr    string
+	DBDsn   string
+	IsHttps bool
 }
 
 func New() (*Config, error) {
@@ -41,9 +42,22 @@ func getConfig() *Config {
 	}
 
 	return &Config{
-		Addr:  getStringFromEnvOrFallback("RUN_ADDRESS", defaultAddr),
-		DBDsn: getStringFromEnvOrFallback("DATABASE_URI", defaultDbUrl),
+		Addr:    getStringFromEnvOrFallback("RUN_ADDRESS", defaultAddr),
+		DBDsn:   getStringFromEnvOrFallback("DATABASE_URI", defaultDbUrl),
+		IsHttps: getBoolFromEnvOrFallback("IS_HTTPS", false),
 	}
+}
+
+func getBoolFromEnvOrFallback(envKey string, fallback bool) bool {
+	fromEnv, ok := os.LookupEnv(envKey)
+	if ok {
+		if fromEnv == "true" || fromEnv == "True" || fromEnv == "TRUE" || fromEnv == "1" {
+			return true
+		}
+		return false
+	}
+
+	return fallback
 }
 
 func getStringFromEnvOrFallback(envKey string, fallback string) string {
