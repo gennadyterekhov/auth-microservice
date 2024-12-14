@@ -12,3 +12,12 @@ func Health(res http.ResponseWriter, req *http.Request) {
 	}
 	res.WriteHeader(http.StatusOK)
 }
+
+func Options(res http.ResponseWriter, req *http.Request) {
+	_, err := res.Write([]byte(`{"status":"ok", "code":200}`))
+	if err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	res.WriteHeader(http.StatusOK)
+}

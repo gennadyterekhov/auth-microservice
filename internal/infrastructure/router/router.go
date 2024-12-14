@@ -38,26 +38,61 @@ func (r *Router) initializeRoutes() {
 
 	routes := Routes{
 		Route{
-			"AuthMicroserviceLogin",
-			strings.ToUpper("Post"),
-			"/login",
-			http.HandlerFunc(r.Controllers.Login.Login),
-		},
-
-		Route{
-			"AuthMicroserviceRegister",
-			strings.ToUpper("Post"),
-			"/register",
-			http.HandlerFunc(r.Controllers.Register.Register),
+			"options",
+			"OPTIONS",
+			"/",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					http.HandlerFunc(health.Options),
+				),
+			).ServeHTTP,
 		},
 
 		Route{
 			"Health",
 			strings.ToUpper("Get"),
 			"/health",
-			http.HandlerFunc(health.Health),
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					http.HandlerFunc(health.Health),
+				),
+			).ServeHTTP,
 		},
-		// TODO add check, forget, verify-email endpoints
+
+		Route{
+			"AuthMicroserviceLogin",
+			strings.ToUpper("Post"),
+			"/login",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					middleware.Auth(
+						middleware.ResponseContentTypeJSON(
+							middleware.RequestContentTypeJSON(
+								http.HandlerFunc(r.Controllers.Login.Login),
+							),
+						),
+					),
+				),
+			).ServeHTTP,
+		},
+
+		Route{
+			"AuthMicroserviceRegister",
+			strings.ToUpper("Post"),
+			"/register",
+			middleware.Logger(
+				middleware.CorsAllowAll(
+					middleware.Auth(
+						middleware.ResponseContentTypeJSON(
+							middleware.RequestContentTypeJSON(
+								http.HandlerFunc(r.Controllers.Register.Register),
+							),
+						),
+					),
+				),
+			).ServeHTTP,
+		},
+		// TODO add forget, verify-email endpoints
 	}
 
 	for _, route := range routes {
@@ -65,6 +100,6 @@ func (r *Router) initializeRoutes() {
 			Methods(route.Method).
 			Path(route.Pattern).
 			Name(route.Name).
-			Handler(middleware.AddCommonMiddleware(route.HandlerFunc))
+			Handler(route.HandlerFunc)
 	}
 }
