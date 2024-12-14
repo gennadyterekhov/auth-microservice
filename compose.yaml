@@ -15,7 +15,7 @@ services:
       - ./.env:/app/.env
       - ./migrations:/app/migrations
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - authmcrsrv_network
 
