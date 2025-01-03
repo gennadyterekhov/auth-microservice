@@ -4,8 +4,6 @@ FROM golang:1.23-alpine AS builder
 # Set the working directory inside the container
 WORKDIR /app
 
-RUN apk add --no-cache git build-base
-
 # Copy the Go module files and download dependencies
 COPY . .
 RUN go mod download
@@ -19,6 +17,9 @@ FROM alpine:latest
 
 # Set the working directory inside the container
 WORKDIR /app
+
+# for healthcheck
+RUN apk add curl
 
 # Copy the required files from the builder stage
 COPY --from=builder /app/bin/server_linux_amd64 /app/bin/server_linux_amd64
