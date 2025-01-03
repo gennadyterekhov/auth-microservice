@@ -1,0 +1,32 @@
+name: Continuous Deployment
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    container: golang:1.23
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: get sha
+        run: |
+          echo $GITHUB_SHA
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            pwd
+            ls
+            cd /var/www/auth-microservice
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/github_gennadyterekhov
+            git status
+            git pull
+            docker compose down
+            BUILD_COMMIT=$(git rev-parse --short "${{ github.sha }}") BUILD_TIME="$(date +"%Y-%m-%d_%H:%M:%S")" docker compose -f compose-prod.yaml up -d --build --remove-orphans
